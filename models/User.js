@@ -1,0 +1,65 @@
+
+
+const { Model, DataTypes } = require('sequelize');      // imports from 'Sequelize'
+const sequelize = require('../config/connection');
+
+// Create the User model
+class User extends Model {}                             // 'User' inherits all of the "Model" class functionality
+
+// Define table columns and configuration
+User.init(
+    {   // Define the table columns
+        // Define an id column
+        id: {
+          // use the special Sequelize DataTypes object provide what type of data it is
+          type: DataTypes.INTEGER,
+          // this is the equivalent of SQL's `NOT NULL` option
+          allowNull: false,
+          // instruct that this is the Primary Key
+          primaryKey: true,
+          // turn on auto increment
+          autoIncrement: true
+        },
+        // Define a username column
+        username: {
+          type: DataTypes.STRING,
+          allowNull: false
+        },
+        // Define an email column
+        email: {
+          type: DataTypes.STRING,
+          allowNull: false,
+          // there cannot be any duplicate email values in this table
+          unique: true,
+          // if allowNull is set to false, we can run our data through validators before creating the table data
+          validate: {
+            isEmail: true
+          }
+        },
+        // Define a password column
+        password: {
+          type: DataTypes.STRING,
+          allowNull: false,
+          validate: {
+            // this means the password must be at least four characters long
+            len: [4]
+          }
+        }
+      },
+  {
+    // TABLE CONFIGURATION OPTIONS GO HERE (https://sequelize.org/v5/manual/models-definition.html#configuration))
+
+    // Pass in our imported sequelize connection (the direct connection to our database)
+    sequelize,
+    // DO NOT automatically create createdAt/updatedAt timestamp fields
+    timestamps: false,
+    // DO NOT pluralize name of database table
+    freezeTableName: true,
+    // Use underscores instead of camel-casing (i.e. `comment_text` and not `commentText`)
+    underscored: true,
+    // Make it so the model name stays lowercase in the database
+    modelName: 'user'
+  }
+);
+
+module.exports = User;
