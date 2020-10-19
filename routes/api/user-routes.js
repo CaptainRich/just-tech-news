@@ -68,6 +68,7 @@ router.put('/:id', (req, res) => {
   // if req.body has exact key/value pairs to match the model, you can just use `req.body` instead
   // req.body contains the new data for the update, req.params.id indicates exactly where to update
   User.update(req.body, {
+    individualHooks: true,          // needed for bcrypt and sequelize
     where: {
       id: req.params.id
     }

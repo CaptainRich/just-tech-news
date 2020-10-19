@@ -2,6 +2,7 @@
 
 const { Model, DataTypes } = require('sequelize');      // imports from 'Sequelize'
 const sequelize = require('../config/connection');
+const bcrypt    = require( 'bcrypt' );                  // for password hashing (encryption)
 
 // Create the User model
 class User extends Model {}                             // 'User' inherits all of the "Model" class functionality
@@ -47,6 +48,32 @@ User.init(
         }
       },
   {
+    // Add the 'hooks' section, needed for password hashing with bcrypt
+    hooks: {
+      // Set up 'beforeCreate' lifecycle "hook" functionality
+      // This first variation uses a 'promise'
+      // beforeCreate(userData) {
+      //   return bcrypt.hash(userData.password, 10).then(newUserData => {
+      //     return newUserData
+      //   });
+      // }
+
+      // This ability is needed when a new user signs up.
+      // Set up 'beforeCreate' lifecycle "hook" functionality
+      // This second variation uses 'async/await'
+      async beforeCreate(newUserData) {
+        newUserData.password = await bcrypt.hash(newUserData.password, 10);
+        return newUserData;
+      },
+
+      // This ability is needed when a user updates his/her password.
+      // set up beforeUpdate lifecycle "hook" functionality
+      async beforeUpdate(updatedUserData) {
+        updatedUserData.password = await bcrypt.hash(updatedUserData.password, 10);
+        return updatedUserData;
+      }
+    },
+   
     // TABLE CONFIGURATION OPTIONS GO HERE (https://sequelize.org/v5/manual/models-definition.html#configuration))
 
     // Pass in our imported sequelize connection (the direct connection to our database)
