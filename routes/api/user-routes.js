@@ -58,6 +58,38 @@ router.post('/', (req, res) => {
       });
   });
 
+  
+//////////////////////////////////////////////////////////////////////////////////////////////////
+// This is the login route
+router.post('/login', (req, res) => {
+  // Query operation to validate a user
+  // expects {email: 'lernantino@gmail.com', password: 'password1234'}
+  User.findOne({
+    where: {
+      email: req.body.email
+    }
+  }).then(dbUserData => {
+    if (!dbUserData) {
+      res.status(400).json({ message: 'No user with that email address!' });
+      return;
+    }
+
+    // Verify user by comparing passwords.  The database hashed password will be
+    // in 'dbUserData', while the plaintext (user entered) password will be in req.body.
+    const validPassword = dbUserData.checkPassword(req.body.password);
+
+    if (!validPassword) {
+      res.status(400).json({ message: 'Incorrect password!' });
+      return;
+    }
+
+    res.json({ user: dbUserData, message: 'You are now logged in!' });
+
+  });
+
+});
+
+
 //////////////////////////////////////////////////////////////////////////////////////////////////
 // PUT /api/users/1
 router.put('/:id', (req, res) => {

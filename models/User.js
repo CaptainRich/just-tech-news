@@ -5,7 +5,14 @@ const sequelize = require('../config/connection');
 const bcrypt    = require( 'bcrypt' );                  // for password hashing (encryption)
 
 // Create the User model
-class User extends Model {}                             // 'User' inherits all of the "Model" class functionality
+class User extends Model {                             // 'User' inherits all of the "Model" class functionality
+
+  // Set up method to run on instance data (per user) to check password
+  checkPassword(loginPw) {
+    return bcrypt.compareSync(loginPw, this.password);
+  };
+};
+
 
 // Define table columns and configuration
 User.init(
@@ -88,5 +95,9 @@ User.init(
     modelName: 'user'
   }
 );
+
+
+
+
 
 module.exports = User;
