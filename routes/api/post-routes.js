@@ -3,14 +3,14 @@
 // Import the packages and models needed.
 const router = require('express').Router();
 const sequelize = require('../../config/connection');
-const { Post, User, Vote} = require('../../models');    // Need all models here for our JOINs
+const { Post, User, Vote, Comment } = require('../../models');    // Need all models here for our JOINs
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 // Get all users in the database
 router.get('/', (req, res) => {
     console.log('======================');
     Post.findAll({
-      // Query configuration
+      order: [['created_at', 'DESC']],             // sort in descending date order
       attributes: [
         'id',
         'post_url',
@@ -18,14 +18,22 @@ router.get('/', (req, res) => {
         'created_at',
         [sequelize.literal('(SELECT COUNT(*) FROM vote WHERE post.id = vote.post_id)'), 'vote_count']
       ],
-      order: [['created_at', 'DESC']],                         // sort in descending creation order
       include: [
+        // Include the Comment model here, which also includes the user model:
+        {
+          model: Comment,
+          attributes: ['id', 'comment_text', 'post_id', 'user_id', 'created_at'],
+          include: {
+            model: User,
+            attributes: ['username']
+          }
+        },
         {
           model: User,
           attributes: ['username']
         }
       ]
-    })
+     })
     .then(dbPostData => res.json(dbPostData))
     .catch(err => {
       console.log(err);
@@ -48,6 +56,21 @@ router.get('/:id', (req, res) => {
       'title',
       'created_at',
       [sequelize.literal('(SELECT COUNT(*) FROM vote WHERE post.id = vote.post_id)'), 'vote_count']
+    ],
+    include: [
+      // Include the Comment model here, which also includes the user model:
+      {
+        model: Comment,
+        attributes: ['id', 'comment_text', 'post_id', 'user_id', 'created_at'],
+        include: {
+          model: User,
+          attributes: ['username']
+        }
+      },
+      {
+        model: User,
+        attributes: ['username']
+      }
     ],
     include: [
       {
