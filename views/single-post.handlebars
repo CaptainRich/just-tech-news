@@ -1,6 +1,6 @@
 
 
- {{ > post-info post }}       <!-- The '>' is needed to perform the import. -->
+ {{> post-info post }}       <!-- The '>' is needed to perform the import. -->
 
 {{#if loggedIn}}
 <form class="comment-form">
@@ -19,6 +19,6 @@
 
 <!-- Import the javascript files, if the user is logged in -->
 {{#if loggedIn}}
-   <script src="/javascript/comment.js"></script>
-   <script src="/javascript/upvote.js"></script>
+<script src="/javascript/comment.js"></script>
+<script src="/javascript/upvote.js"></script>
 {{/if}}
