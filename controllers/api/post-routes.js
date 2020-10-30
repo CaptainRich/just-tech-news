@@ -163,22 +163,35 @@ router.put('/:id', withAuth, (req, res) => {
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////
 // Route to delete a post
 router.delete('/:id', withAuth, (req, res) => {
-  Post.destroy({
-    where: {
-      id: req.params.id
-    }
-  })
-    .then(dbPostData => {
-      if (!dbPostData) {
-        res.status(404).json({ message: 'No post found with this id' });
-        return;
-      }
-      res.json(dbPostData);
+  // Post.destroy({
+  //   where: {
+  //     id: req.params.id
+  //   }
+  // })
+  //   .then(dbPostData => {
+  //     if (!dbPostData) {
+  //       res.status(404).json({ message: 'No post found with this id' });
+  //       return;
+  //     }
+  //     res.json(dbPostData);
+  //   })
+  //   .catch(err => {
+  //     console.log(err);
+  //     res.status(500).json(err);
+  //   });
+
+
+    Post.findOne({
+      where: {id: req.params.id},
+      include: [Comment]
     })
-    .catch(err => {
-      console.log(err);
-      res.status(500).json(err);
-    });
+    .then(post => {
+      post.comments.forEach(comment => {
+        comment.destroy();
+      })
+      post.destroy();
+      res.end();
+    })
 
 });
 

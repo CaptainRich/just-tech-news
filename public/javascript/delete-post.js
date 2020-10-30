@@ -3,19 +3,16 @@
 async function deleteFormHandler(event) {
     event.preventDefault();
   
-    router.delete('/:id',  (req, res) => {
-        Post.findOne({
-          where: {id: req.params.id},
-          include: [Comment]
-        })
-        .then(post => {
-          post.comments.forEach(comment => {
-            comment.destroy();
-          })
-          post.destroy();
-          res.end();
-        })
-    })
+    await fetch(`/api/posts/${id}`, {
+      method: 'DELETE'
+    });
+
+    if (response.ok) {
+      document.location.replace('/dashboard/');
+    } else {
+      alert(response.statusText);
+    }
+
   };
   
   document.querySelector('.delete-post-btn').addEventListener('click', deleteFormHandler);
