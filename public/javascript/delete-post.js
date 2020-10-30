@@ -1,11 +1,9 @@
 
 
-const withAuth  = require('../../utils/auth');
-
 async function deleteFormHandler(event) {
     event.preventDefault();
   
-    router.delete('/:id', withAuth, (req, res) => {
+    router.delete('/:id',  (req, res) => {
         Post.findOne({
           where: {id: req.params.id},
           include: [Comment]
