@@ -22,4 +22,5 @@ if (process.env.JAWSDB_URL) {
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////
-  module.exports = sequelize;
+// Export the connection to the database.
+   module.exports = sequelize;

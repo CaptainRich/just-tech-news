@@ -1,7 +1,7 @@
 
 
 const { Model, DataTypes } = require('sequelize');      // imports from 'Sequelize'
-const sequelize = require('../config/connection');
+const sequelize = require('../config/connection');      // import the database connection 
 const bcrypt    = require( 'bcrypt' );                  // for password hashing (encryption)
 
 // Create the User model
@@ -16,10 +16,10 @@ class User extends Model {                             // 'User' inherits all of
 
 // Define table columns and configuration
 User.init(
-    {   // Define the table columns
+    {   // Define the table columns (there are 4)
         // Define an id column
         id: {
-          // use the special Sequelize DataTypes object provide what type of data it is
+          // use the special Sequelize DataTypes object to provide what type of data it is
           type: DataTypes.INTEGER,
           // this is the equivalent of SQL's `NOT NULL` option
           allowNull: false,
@@ -53,8 +53,8 @@ User.init(
             len: [4]
           }
         }
-      },
-  {
+    },
+    {
     // Add the 'hooks' section, needed for password hashing with bcrypt
     hooks: {
       // Set up 'beforeCreate' lifecycle "hook" functionality
@@ -80,7 +80,7 @@ User.init(
         return updatedUserData;
       }
     },
-   
+
     // TABLE CONFIGURATION OPTIONS GO HERE (https://sequelize.org/v5/manual/models-definition.html#configuration))
 
     // Pass in our imported sequelize connection (the direct connection to our database)
@@ -97,7 +97,5 @@ User.init(
 );
 
 
-
-
-
+// Export the user table.
 module.exports = User;
