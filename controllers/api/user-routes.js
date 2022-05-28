@@ -8,7 +8,7 @@ const { User, Post, Vote, Comment } = require('../../models');
 router.get('/', (req, res) => {
     // Access our User model and run .findAll() method, inherited from the "Model" class.
     User.findAll({
-        attributes: { exclude: ['password'] },
+        attributes: { exclude: ['password'] },    // make sure the password doesn't come back
         include: [
           {
             model: Post,
@@ -33,7 +33,7 @@ router.get('/', (req, res) => {
 // GET /api/users/1
 router.get('/:id', (req, res) => {
   User.findOne({
-    attributes: { exclude: ['password'] },
+    attributes: { exclude: ['password'] },    // make sure the password doesn't come back
     where: {
       id: req.params.id   // This is equivalent to "SELECT * FROM users WHERE id  = 1"
     },
