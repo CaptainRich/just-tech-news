@@ -38,7 +38,7 @@ app.set('view engine', 'handlebars');
 // turn on routes
 app.use(routes);
 
-// Turn on the connection to db and server
+// Turn on the connection to db and server. This takes the models and connects them to the database tables.
 sequelize.sync({ force: false }).then(() => {       // 'true' forces the tables to re-create if there are association changes.
   app.listen(PORT, () => console.log('Now listening'));
 });

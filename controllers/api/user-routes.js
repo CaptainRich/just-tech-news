@@ -3,10 +3,10 @@
 const router = require('express').Router();
 const { User, Post, Vote, Comment } = require('../../models');
 
-//////////////////////////////////////////////////////////////////////////////////////////////////
+////////////////// Define the various endpoints needed  ////////////////////////////////////////////////
 // GET /api/users
 router.get('/', (req, res) => {
-    // Access our User model and run .findAll() method)
+    // Access our User model and run .findAll() method, inherited from the "Model" class.
     User.findAll({
         attributes: { exclude: ['password'] },
         include: [
@@ -21,7 +21,7 @@ router.get('/', (req, res) => {
             as: 'voted_posts'
           }
         ]
-    })                            // equivalent to   "SELECT * FROM users"
+    })                            // .findAll is equivalent to   "SELECT * FROM users"
       .then(dbUserData => res.json(dbUserData))
       .catch(err => {
         console.log(err);
@@ -35,7 +35,7 @@ router.get('/:id', (req, res) => {
   User.findOne({
     attributes: { exclude: ['password'] },
     where: {
-      id: req.params.id
+      id: req.params.id   // This is equivalent to "SELECT * FROM users WHERE id  = 1"
     },
     include: [
       {
@@ -60,7 +60,7 @@ router.get('/:id', (req, res) => {
     ]
   })
       .then(dbUserData => {
-        if (!dbUserData) {
+        if (!dbUserData) {  // Handel an invalid/nonexistent id value.
           res.status(404).json({ message: 'No user found with this id' });
           return;
         }
@@ -80,7 +80,7 @@ router.post('/', (req, res) => {
   // This is equivalent to:  INSERT INTO users  (username, email, password)  VALUES ("Lernantino", "lernantino@gmail.com", "password1234");
 
   User.create({
-    username: req.body.username,
+    username: req.body.username,           // these are the "keys" defined in the "user" model.
     email: req.body.email,
     password: req.body.password
   })
@@ -202,4 +202,5 @@ router.post('/logout', (req, res) => {
   }
 });
 
+//////////////////////////////////////////////////////////////////////////////////////////
 module.exports = router;
