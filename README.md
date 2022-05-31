@@ -17,16 +17,18 @@ Create a full-stack application to implement a bulletin board.
  * express-handlebars
  * express-session
  * connect-session-sequelize
- * dotenv
- * bcrypt
+ * dotenv (to privatize database name, user ID, and password - avoids GIT source control)
+ * bcrypt (to encrypt user passwords)
  * mysql2
+ * insomnia (for route testing)
 
 # Application Structure & Logic
- .env                  - this file (private) contains the database name, user ID, and password
- /db/schema.sql        - this file dumps the database and initializes a new one.
- /config/connection.js - this file creates the connection to the database on startup.
- /models/index.js      - this file collects the various table models and defines their associations.
- /models/user.js       - this file defines the "user" database table.
+ .env                            - this file (private) contains the database name, user ID, and password
+ /db/schema.sql                  - this file dumps the database and initializes a new one.
+ /config/connection.js           - this file creates the connection to the database on startup.
+ /models/index.js                - this file collects the various table models and defines their associations.
+ /models/user.js                 - this file defines the "user" database table.
+ /controllers/api/user-routes.js - the API routes for the 'user' model
 
  
 # Deployment Link
