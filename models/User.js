@@ -7,9 +7,11 @@ const bcrypt    = require( 'bcrypt' );                  // for password hashing 
 // Create the User model
 class User extends Model {                             // 'User' inherits all of the "Model" class functionality
 
-  // Set up method to run on instance data (per user) to check password
+  // Set up method to run on instance data (per user) to check password validity.  "this" refers to the user 
+  // currently trying to login.
   checkPassword(loginPw) {
     return bcrypt.compareSync(loginPw, this.password);
+    //return bcrypt.compare(loginPw, this.password);     // use the "async" version, always seems to return "true"
   };
 };
 
