@@ -14,7 +14,8 @@ class User extends Model {                             // 'User' inherits all of
 };
 
 
-// Define table columns and configuration
+// Define table columns and configuration.  The "init" method provides the context for the methods inherited 
+// from the "Sequelize Model" class.
 User.init(
     {   // Define the table columns (there are 4)
         // Define an id column
