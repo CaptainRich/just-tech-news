@@ -28,6 +28,7 @@ Create a full-stack application to implement a bulletin board.
  /config/connection.js           - this file creates the connection to the database on startup.
  /models/index.js                - this file collects the various table models and defines their associations.
  /models/user.js                 - this file defines the "user" database table.
+ /models/post.js                 - this file defines the "post" database table.
  /controllers/api/user-routes.js - the API routes for the 'user' model
 
  
