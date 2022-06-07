@@ -7,7 +7,7 @@ const Comment = require('./Comment');
 
 
 ///////////////////////////////////////////////////////////////////////////////////////////////
-// Define the associations between the tables
+// Define the (model) associations between the tables
 User.hasMany(Post, {
   foreignKey: 'user_id'            // this links the 'user.id' column with the 'post.user_id' column
 });
