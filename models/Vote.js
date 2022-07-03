@@ -5,8 +5,8 @@ const { Model, DataTypes } = require('sequelize');
 const sequelize = require('../config/connection');
 
 
-
-class Vote extends Model {}
+// Create the "Vote" model, fields/columns
+class Vote extends Model {}                            // 'Vote' inherits all of the "Model" class functionality
 
 Vote.init(
   {
@@ -18,7 +18,7 @@ Vote.init(
     user_id: {
         type: DataTypes.INTEGER,
         allowNull: false,
-        references: {
+        references: {                                  // Reference the 'user' table to obtain this foreign key
           model: 'user',
           key: 'id'
         }
@@ -26,7 +26,7 @@ Vote.init(
      post_id: {
         type: DataTypes.INTEGER,
         allowNull: false,
-        references: {
+        references: {                                // Reference the 'post' table to obtain this foreign key
           model: 'post',
           key: 'id'
         }

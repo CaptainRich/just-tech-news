@@ -1,11 +1,12 @@
 
 
 // Import the modules we need
+const res = require('express/lib/response');
 const { Model, DataTypes } = require('sequelize');
 const sequelize            = require('../config/connection');
 
 // Create the Post model
-class Post extends Model {
+class Post extends Model {                            // 'Post' inherits all of the "Model" class functionality
 
   static upvote(body, models) {
     return models.Vote.create({
@@ -26,8 +27,10 @@ class Post extends Model {
             'vote_count'
           ]
         ]
-      });
+      })
+
     });
+
   }
 }
 
