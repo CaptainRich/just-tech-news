@@ -23,15 +23,16 @@ Create a full-stack application to implement a bulletin board.
  * insomnia (for route testing)
 
 # Application Structure & Logic
- .env                            - this file (private) contains the database name, user ID, and password
- /db/schema.sql                  - this file dumps the database and initializes a new one.
- /config/connection.js           - this file creates the connection to the database on startup.
- /models/index.js                - this file collects the various table models and defines the associations between tables.
- /models/user.js                 - this file defines the "user" database table.
- /models/post.js                 - this file defines the "post" database table.
- /models/votes.js                - this file defines the "vote" database table.
- /controllers/api/user-routes.js - the API routes for the 'user' model
- controllers/api/post-routes.js  - the API routes for the 'post' model           
+ .env                               - this file (private) contains the database name, user ID, and password
+ /db/schema.sql                     - this file dumps the database and initializes a new one.
+ /config/connection.js              - this file creates the connection to the database on startup.
+ /models/index.js                   - this file collects the various table models and defines the associations between tables.
+ /models/user.js                    - this file defines the "user" database table.
+ /models/post.js                    - this file defines the "post" database table.
+ /models/votes.js                   - this file defines the "vote" database table.
+ /controllers/api/user-routes.js    - the API routes for the 'user' model
+ /controllers/api/post-routes.js    - the API routes for the 'post' model      
+ /controllers/api/comment-routes.js - the API routes for the 'comment' model     
 
  
 # Deployment Link
