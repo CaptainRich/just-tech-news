@@ -2,6 +2,7 @@
 
 const router = require('express').Router();
 
+// Import the necessary modules needed.
 const sequelize = require('../config/connection');
 const { Post, User, Comment } = require('../models');
 
@@ -35,7 +36,7 @@ router.get('/', (req, res) => {
   })
     .then(dbPostData => {
 
-      // Need to serialize the entire array of posts
+      // Need to serialize the entire array of posts, into a new array "posts".
       const posts = dbPostData.map(post => post.get({ plain: true }));
 
       // 'homepage.handlebars' is implied here, the second argument is our HTML data
