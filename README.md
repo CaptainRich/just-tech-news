@@ -10,7 +10,7 @@ Richard Ay, October 2020 *(Updated May 2022)*
 * [Application Screen Shot](#application-screen-shot)
 
 ## Project Objective
-Create a full-stack application to implement a bulletin board.
+Create a full-stack application to implement a bulletin board, based on the MVC architecture.
 
 # Technologies Used
  * express
@@ -38,10 +38,16 @@ Create a full-stack application to implement a bulletin board.
  /models/votes.js                   - this file defines the "vote" database table.
 
  /controllers/api/user-routes.js    - the API routes for the 'user' model
+<<<<<<< HEAD
 
  /controllers/api/post-routes.js    - the API routes for the 'post' model   
     
  /controllers/api/comment-routes.js - the API routes for the 'comment' model     
+=======
+ /controllers/api/post-routes.js    - the API routes for the 'post' model      
+ /controllers/api/comment-routes.js - the API routes for the 'comment' model 
+ /views                             - the parent directory for \layouts and \partials    
+>>>>>>> develop
 
  
 # Deployment Link
