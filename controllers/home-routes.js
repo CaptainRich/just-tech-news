@@ -60,7 +60,7 @@ router.get('/login', (req, res) => {
     return;
   }
 
-  res.render('login');
+  res.render('login');      // No need for the 2nd argument here.
 });
 
 
