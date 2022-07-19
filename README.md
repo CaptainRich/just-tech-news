@@ -10,7 +10,7 @@ Richard Ay, October 2020 *(Updated May 2022)*
 * [Application Screen Shot](#application-screen-shot)
 
 ## Project Objective
-Create a full-stack application to implement a bulletin board.
+Create a full-stack application to implement a bulletin board, based on the MVC architecture.
 
 # Technologies Used
  * express
