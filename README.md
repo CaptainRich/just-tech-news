@@ -34,7 +34,8 @@ Create a full-stack application to implement a bulletin board, based on the MVC 
  /controllers/api/post-routes.js    - the API routes for the 'post' model      
  /controllers/api/comment-routes.js - the API routes for the 'comment' model 
  /views                             - the parent directory for \layouts and \partials    
-
+ /public/javascript                 - this directory contains the static pages for the front-end\
+ /public/stylesheets                - this directory contains the CSS styling for the site
  
 # Deployment Link
 This application is deployed on Heroku.  The Heroku deployment link is:

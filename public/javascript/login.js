@@ -5,7 +5,7 @@
 //////////////////////////////////////////////////////////////////////////////////////////////
 // Handle the 'sign-up' activity
 async function signupFormHandler(event) {
-    event.preventDefault();
+    event.preventDefault();                   // keep the page from reloading
 
     // Get the data from the form
     const username = document.querySelector('#username-signup').value.trim();
@@ -26,7 +26,8 @@ async function signupFormHandler(event) {
 
         // Check the response status
         if( response.ok ) {
-            console.log( 'Success' );
+            console.log( 'Successfully signed-up a new user.' );
+            document.location.replace('/dashboard');
         }
         else {
             alert( response.statusText );
@@ -39,7 +40,7 @@ async function signupFormHandler(event) {
 //////////////////////////////////////////////////////////////////////////////////////////////
 // Handle the 'login' activity
 async function loginFormHandler(event) {
-    event.preventDefault();
+    event.preventDefault();                   // keep the page from reloading
 
     // Get the data from the form
     const email    = document.querySelector('#email-login').value.trim();
@@ -68,7 +69,7 @@ async function loginFormHandler(event) {
 }
   
 
-  // This 'listener' for the submit buttons on the form.
+  // These 'listeners' are for the submit buttons on the forms.
   document.querySelector('.signup-form').addEventListener('submit', signupFormHandler);
   document.querySelector('.login-form').addEventListener('submit', loginFormHandler);
   
