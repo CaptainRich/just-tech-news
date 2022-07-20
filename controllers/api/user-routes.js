@@ -198,6 +198,7 @@ router.post('/logout', (req, res) => {
     });
   }
   else {
+    console.log( "Cannot logout, no session logged in.");
     res.status(404).end();
   }
 });
