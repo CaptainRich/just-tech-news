@@ -9,8 +9,8 @@ module.exports = {
 
     ///////////////////////////////////////////////////////////
     // Function to address pluralization 
-    format_plural: (word, amount) => {
-        if (amount !== 1) {
+    format_plural: (word, count) => {
+        if (count !== 1) {
             return `${word}s`;          // return the plural of the word
         }
         //  Otherwise return singular
@@ -21,11 +21,11 @@ module.exports = {
     // Function to address URL shortening
     format_url: url => {
         return url
-            .replace('http://', '')
-            .replace('https://', '')
-            .replace('www.', '')
-            .split('/')[0]
-            .split('?')[0];
+            .replace('http://', '')         // replace string with nothing
+            .replace('https://', '')        // replace string with nothing
+            .replace('www.', '')            // replace string with nothing
+            .split('/')[0]                  // split the string on "/" and take the 1st part
+            .split('?')[0];                 // split the string on "?" and take the 1st part
     }
 }
 
