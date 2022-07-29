@@ -13,7 +13,8 @@
   {{/each}}
 </div>
 
-
+<!-- Only logged-in users can comment on a post -->
+{{#if loggedIn}}
 <form class="comment-form">
   <div>
     <textarea name="comment-body"></textarea>
@@ -23,3 +24,4 @@
     <button type="submit">add comment</button>
   </div>
 </form>
+{{/if}}
