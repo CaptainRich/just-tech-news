@@ -38,6 +38,8 @@ Create a full-stack application to implement a bulletin board, based on the MVC 
  /views/partials                    - contains files for the remainder of the handlebars to avoid HTML duplication
  /public/javascript                 - this directory contains the static pages for the front-end\
  /public/stylesheets                - this directory contains the CSS styling for the site
+ /_ _test__                         - this directory contains the unit tests
+ /utils                             - contains the 'helper' functions for the handlebars routines
  
 # Deployment Link
 This application is deployed on Heroku.  The Heroku deployment link is:

@@ -1,10 +1,10 @@
 //////////////////////////////////////////////////////////////////////////
 // Not using "Moment" here, rather the built in "date" object.
 module.exports = {
+    // Function to format dates
     format_date: date => {
         return `${new Date(date).getMonth() + 1}/${new Date(date).getDate()}/${new Date(
-            date
-        ).getFullYear()}`;
+            date).getFullYear()}`;
     },
 
     ///////////////////////////////////////////////////////////
