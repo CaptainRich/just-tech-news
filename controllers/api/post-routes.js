@@ -1,8 +1,10 @@
 
 
 // Import the packages and models needed.
-const router = require('express').Router();
+const router    = require('express').Router();
 const sequelize = require('../../config/connection');
+const withAuth  = require('../../utils/auth');
+
 const { Post, User, Vote, Comment } = require('../../models');    // Need all models here for our JOINs
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////
@@ -10,7 +12,7 @@ const { Post, User, Vote, Comment } = require('../../models');    // Need all mo
 router.get('/', (req, res) => {
     console.log('======================');
     Post.findAll({
-      order: [['created_at', 'DESC']],             // sort in descending date order
+      order: [['created_at', 'DESC']],            // order the posts so that the latest appears first
       attributes: [
         'id',
         'post_url',
@@ -18,8 +20,8 @@ router.get('/', (req, res) => {
         'created_at',
         [sequelize.literal('(SELECT COUNT(*) FROM vote WHERE post.id = vote.post_id)'), 'vote_count']
       ],
-      include: [
-        // Include the Comment model here, which also includes the user model:
+      include: [        // the "include" property defines a "JOIN"
+        // include the Comment model here:
         {
           model: Comment,
           attributes: ['id', 'comment_text', 'post_id', 'user_id', 'created_at'],
@@ -28,6 +30,7 @@ router.get('/', (req, res) => {
             attributes: ['username']
           }
         },
+        // include the User model here (to get the user's name of the poster)
         {
           model: User,
           attributes: ['username']
@@ -44,7 +47,7 @@ router.get('/', (req, res) => {
 
   
 ///////////////////////////////////////////////////////////////////////////////////////////////////
-// Get one user from the database
+// Get one post from the database
 router.get('/:id', (req, res) => {
   Post.findOne({
     where: {
@@ -95,12 +98,12 @@ router.get('/:id', (req, res) => {
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////
 // Route to create a new post
-router.post('/', (req, res) => {
+router.post('/', withAuth, (req, res) => {
   // expects {title: 'Taskmaster goes public!', post_url: 'https://taskmaster.com/press', user_id: 1}
   Post.create({
-    title: req.body.title,
+    title:    req.body.title,
     post_url: req.body.post_url,
-    user_id: req.body.user_id
+    user_id:  req.session.user_id
   })
     .then(dbPostData => res.json(dbPostData))
     .catch(err => {
@@ -114,11 +117,11 @@ router.post('/', (req, res) => {
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////
 // Update when a vote is made, this creates "vote data"   
 // PUT /api/posts/upvote
-router.put('/upvote', (req, res) => {
+router.put('/upvote', withAuth, (req, res) => {
   // Use the custom static method created in models/Post.js
   // Make sure the session exists first.
   if (req.session) {
-    // pass session id along with all destructured properties on req.body
+    // Pass the session ID along with all destructured properties on req.body
     Post.upvote({ ...req.body, user_id: req.session.user_id }, { Vote, Comment, User })
       .then(updatedVoteData => res.json(updatedVoteData))
       .catch(err => {
@@ -126,12 +129,15 @@ router.put('/upvote', (req, res) => {
         res.status(500).json(err);
       });
   }
+  else {
+    res.status(404).json({ message: 'No req.session... '});
+  }
 });
 
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////
 // Route to update a post's title
-router.put('/:id', (req, res) => {
+router.put('/:id', withAuth, (req, res) => {
 
   // Expects 'post id', 'new post title'
   Post.update(
@@ -161,7 +167,7 @@ router.put('/:id', (req, res) => {
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////
 // Route to delete a post
-router.delete('/:id', (req, res) => {
+router.delete('/:id', withAuth, (req, res) => {
   Post.destroy({
     where: {
       id: req.params.id
@@ -178,7 +184,21 @@ router.delete('/:id', (req, res) => {
       console.log(err);
       res.status(500).json(err);
     });
+
+
+    // Post.findOne({
+    //   where: {id: req.params.id},
+    //   include: [Comment]
+    // })
+    // .then(post => {
+    //   post.comments.forEach(comment => {
+    //     comment.destroy();
+    //   })
+    //   post.destroy();
+    //   res.end();
+    // })
+
 });
 
-
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   module.exports = router;

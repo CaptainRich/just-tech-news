@@ -2,18 +2,7 @@
 <ol class="post-list">
   {{#each posts as |post| }}
   <li>
-  
-    <!-- 'Article' element moved to \partials\post-info.handlebars.
-         Import that partial here.  -->
-  
-    <ol class="post-list">
-      {{#each posts as |post|}}
-      <li>
-        {{> post-info post }}       <!-- The '>' is needed to perform the import. -->
-      </li>
-      {{/each}}
-    </ol>
-  
+    {{> post-info post }}
   </li>
   {{/each}}
 </ol>

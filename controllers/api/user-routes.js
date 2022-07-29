@@ -1,14 +1,14 @@
 
 
 const router = require('express').Router();
-const { User, Post, Vote } = require('../../models');
+const { User, Post, Vote, Comment } = require('../../models');
 
-//////////////////////////////////////////////////////////////////////////////////////////////////
+////////////////// Define the various endpoints needed  ////////////////////////////////////////////////
 // GET /api/users
 router.get('/', (req, res) => {
-    // Access our User model and run .findAll() method)
+    // Access our User model and run .findAll() method, inherited from the "Model" class.
     User.findAll({
-        attributes: { exclude: ['password'] },
+        attributes: { exclude: ['password'] },    // make sure the password doesn't come back
         include: [
           {
             model: Post,
@@ -21,7 +21,7 @@ router.get('/', (req, res) => {
             as: 'voted_posts'
           }
         ]
-    })                            // equivalent to   "SELECT * FROM users"
+    })                            // .findAll is equivalent to   "SELECT * FROM users"
       .then(dbUserData => res.json(dbUserData))
       .catch(err => {
         console.log(err);
@@ -32,36 +32,35 @@ router.get('/', (req, res) => {
 //////////////////////////////////////////////////////////////////////////////////////////////////
 // GET /api/users/1
 router.get('/:id', (req, res) => {
-    User.findOne({                            // equivalent to    "SELECT * FROM users WHERE id =1"
-      attributes: { exclude: ['password'] },
-      where: {
-        id: req.params.id
+  User.findOne({
+    attributes: { exclude: ['password'] },    // make sure the password doesn't come back
+    where: {
+      id: req.params.id   // This is equivalent to "SELECT * FROM users WHERE id  = 1"
+    },
+    include: [
+      {
+        model: Post,
+        attributes: ['id', 'title', 'post_url', 'created_at']
       },
-      include: [
-        {
+      // include the Comment model here:
+      {
+        model: Comment,
+        attributes: ['id', 'comment_text', 'created_at'],
+        include: {
           model: Post,
-          attributes: ['id', 'title', 'post_url', 'created_at']
-        },
-        // include the Comment model here:
-        {
-          model: Comment,
-          attributes: ['id', 'comment_text', 'created_at'],
-          include: {
-            model: Post,
-            attributes: ['title']
-          }
-        },
-        {
-          model: Post,
-          attributes: ['title'],
-          through: Vote,
-          as: 'voted_posts'
+          attributes: ['title']
         }
-      ]
-    
-    })
+      },
+      {
+        model: Post,
+        attributes: ['title'],
+        through: Vote,
+        as: 'voted_posts'
+      }
+    ]
+  })
       .then(dbUserData => {
-        if (!dbUserData) {
+        if (!dbUserData) {  // Handel an invalid/nonexistent id value.
           res.status(404).json({ message: 'No user found with this id' });
           return;
         }
@@ -81,7 +80,7 @@ router.post('/', (req, res) => {
   // This is equivalent to:  INSERT INTO users  (username, email, password)  VALUES ("Lernantino", "lernantino@gmail.com", "password1234");
 
   User.create({
-    username: req.body.username,
+    username: req.body.username,           // these are the "keys" defined in the "user" model.
     email: req.body.email,
     password: req.body.password
   })
@@ -113,7 +112,7 @@ router.post('/login', (req, res) => {
     }
   }).then(dbUserData => {
     if (!dbUserData) {
-      res.status(400).json({ message: 'No user with that email address!' });
+      res.status(400).json({ message: 'No user found with that email address!' });
       return;
     }
 
@@ -150,7 +149,7 @@ router.put('/:id', (req, res) => {
   // if req.body has exact key/value pairs to match the model, you can just use `req.body` instead
   // req.body contains the new data for the update, req.params.id indicates exactly where to update
   User.update(req.body, {
-    individualHooks: true,          // needed for bcrypt and sequelize
+    individualHooks: true,          // needed for bcrypt and sequelize to hash a password update.
     where: {
       id: req.params.id
     }
@@ -194,13 +193,15 @@ router.delete('/:id', (req, res) => {
 router.post('/logout', (req, res) => {
 
   if (req.session.loggedIn) {
-    req.session.destroy(() => {
+      req.session.destroy(() => {
       res.status(204).end();
     });
   }
   else {
+    console.log( "Cannot logout, no session logged in.");
     res.status(404).end();
   }
 });
 
+//////////////////////////////////////////////////////////////////////////////////////////
 module.exports = router;

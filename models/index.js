@@ -1,11 +1,13 @@
 
-
+// Import the various database tables.
 const User    = require('./User');
 const Post    = require('./Post');
 const Vote    = require('./Vote');
 const Comment = require('./Comment');
 
-// Define the associations between the tables
+
+///////////////////////////////////////////////////////////////////////////////////////////////
+// Define the (model) associations between the tables
 User.hasMany(Post, {
   foreignKey: 'user_id'            // this links the 'user.id' column with the 'post.user_id' column
 });
@@ -58,4 +60,6 @@ Post.hasMany(Comment, {
   foreignKey: 'post_id'
 });
 
+////////////////////////////////////////////////////////////////////////////////////////////
+// Export an object with the above database properties.
 module.exports = { User, Post, Vote, Comment };

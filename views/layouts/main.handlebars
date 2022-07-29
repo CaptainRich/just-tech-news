@@ -18,9 +18,10 @@
     
       <nav>
         {{#if loggedIn}}
-           <button id="logout" class="btn-no-style">logout</button>
+          <a href="/dashboard">dashboard</a>
+          <button id="logout" class="btn-no-style">logout</button>
         {{else}}
-           <a href="/login">login</a>
+          <a href="/login">login</a>
         {{/if}}
       </nav>
     
@@ -35,7 +36,9 @@
     </footer>
   </div>
 
-<!-- Load the script for the login page.  -->
+<!-- Load the script for the logout page, only if logged-in.  -->
+<!-- "loggedIn" is known here because variables passed to "view templates" are automatically
+      passed to the "main" layout. -->
 {{#if loggedIn}}
 <script src="/javascript/logout.js"></script>
 {{/if}}

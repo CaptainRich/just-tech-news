@@ -1,11 +1,13 @@
 
 
 // Import the modules we need
+const res = require('express/lib/response');
 const { Model, DataTypes } = require('sequelize');
-const sequelize = require('../config/connection');
+const sequelize            = require('../config/connection');
 
 // Create the Post model
-class Post extends Model {
+class Post extends Model {                            // 'Post' inherits all of the "Model" class functionality
+
   static upvote(body, models) {
     return models.Vote.create({
       user_id: body.user_id,
@@ -25,8 +27,10 @@ class Post extends Model {
             'vote_count'
           ]
         ]
-      });
+      })
+
     });
+
   }
 }
 
@@ -50,22 +54,23 @@ Post.init(
           isURL: true
         }
       },
-      user_id: {
+      user_id: {         // This is a foreign key, the posters ID from the "User" model.
         type: DataTypes.INTEGER,
-        references: {
+        references: {    // This references the user making the post, from the "User" model
           model: 'user',
           key: 'id'
         }
       }
     },
     {
-      sequelize,
-      freezeTableName: true,
-      underscored: true,
-      modelName: 'post'
+      sequelize,               // Pass in our imported sequelize connection (the direct connection to our database)
+      freezeTableName: true,   // DO NOT pluralize name of database table
+      underscored: true,       // Use underscores instead of camel-casing (i.e. `comment_text` and not `commentText`)
+      modelName: 'post'        // Make it so the model name stays lowercase in the database
     }
   );
 
-
+/////////////////////////////////////////////////////////////////////////////////////////////////////////
+// Export the Post model for the rest of the application to use/access.
 
   module.exports = Post;
