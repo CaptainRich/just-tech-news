@@ -46,6 +46,8 @@ Create a full-stack application to implement a bulletin board, based on the MVC 
 =======
  /controllers/api/post-routes.js    - the API routes for the 'post' model      
  /controllers/api/comment-routes.js - the API routes for the 'comment' model 
+ /controllers/home-routes.js        - the routes for the 'home page'
+ /controllers/dashboard-routes.js   - the routes for "logged in" user
  /views                             - the parent directory for \layouts and \partials    
 <<<<<<< HEAD
 <<<<<<< HEAD
