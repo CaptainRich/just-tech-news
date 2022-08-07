@@ -15,10 +15,10 @@
 </form>
 {{/if}}
 
-{{> comments post.comments}}
+{{> comments post.comments}}    <!-- This imports the "partial" here "comments.handlebars" -->
 
 <!-- Import the javascript files, if the user is logged in -->
 {{#if loggedIn}}
-   <script src="/javascript/comment.js"></script>
-   <script src="/javascript/upvote.js"></script>
+<script src="/javascript/comment.js"></script>
+<script src="/javascript/upvote.js"></script>
 {{/if}}

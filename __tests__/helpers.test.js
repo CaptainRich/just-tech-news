@@ -4,7 +4,7 @@ const {format_plural} = require( '../utils/helpers' );
 const {format_url}    = require( '../utils/helpers' );
 
 
-
+////////////////////////////////////////////////////////////////////////////////////////////////
 // Verify "Dates" and date formats
 test('format_date() returns a date string', () => {
     const date = new Date('2020-03-20 16:12:03');
@@ -13,6 +13,7 @@ test('format_date() returns a date string', () => {
   });
 
 
+  ////////////////////////////////////////////////////////////////////////////////////////////////
   // Test to ensure pluralization is correct.
   test('format_plural() works properly based on count', () => {
 
@@ -22,6 +23,8 @@ test('format_date() returns a date string', () => {
 
   });
 
+
+  ////////////////////////////////////////////////////////////////////////////////////////////////
   // Test to shorten URLs
   test('format_url() returns a simplified url string', () => {
     const url1 = format_url('http://test.com/page/1');
