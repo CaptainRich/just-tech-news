@@ -4,11 +4,11 @@
 
     <div class="title">
         <a href="{{post_url}}" target="_blank">{{title}}</a>
-        <span>({{format_url post_url}})</span>         <!--> use the "helper" function to format the URL -->
+        <span>({{format_url post_url}})</span>         <!-- use the "helper" function to format the URL -->
     </div>
 
     <div class="meta">
-        <!--> use the "helper" functions to format the date and pluralize the vote counts -->
+        <!-- use the "helper" functions to format the date and pluralize the vote counts -->
         {{vote_count}} {{format_plural "point" vote_count}} by {{user.username}} on
         {{format_date created_at}}  
         |

@@ -3,7 +3,7 @@
 // Import the packages and models needed.
 const router    = require('express').Router();
 const sequelize = require('../../config/connection');
-const withAuth  = require('../../utils/auth');
+const withAuth  = require('../../utils/auth');      // import the middleware authentication function
 
 const { Post, User, Vote, Comment } = require('../../models');    // Need all models here for our JOINs
 

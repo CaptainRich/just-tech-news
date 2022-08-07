@@ -1,6 +1,6 @@
 
 
-
+// Function to edit a post
 async function editFormHandler(event) {
     event.preventDefault();
   
@@ -14,7 +14,7 @@ async function editFormHandler(event) {
         }
     });
 
-    if (response.ok) {s
+    if (response.ok) {
         document.location.replace('/dashboard/');
     } else {
         alert(response.statusText);

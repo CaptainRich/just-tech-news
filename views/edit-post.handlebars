@@ -1,16 +1,17 @@
 <article>
-  <a href="/dashboard"> &larr; Back to dashboard</a>
+  <a href="/dashboard"> &larr; Back to the Dashboard</a>
   <h2>
-    Edit Post
+    Edit this Post
   </h2>
 
   <form class="edit-post-form">
     <div>
       <input name="post-title" type="text" value="{{post.title}}" />
-      <span>({{format_url post.post_url}})</span>
+      <span>({{format_url post.post_url}})</span>   <!-- use the helper function to format the URL -->
     </div>
 
     <div>
+      <!-- Use the helper functions "format_plural" and "format_date" here -->
       {{post.vote_count}} {{format_plural "point" post.vote_count}} by you on {{format_date post.created_at}}
       |
       <a href="/post/{{post.id}}">{{post.comments.length}} {{format_plural "comment" post.comments.length}}</a>
@@ -22,7 +23,7 @@
 
 </article>
 
-
+<!-- Display any comments made to this Post. -->
 {{> comments post.comments}}
 
 
