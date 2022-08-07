@@ -1,16 +1,16 @@
 const router    = require('express').Router();
 const sequelize = require('../config/connection');
-const withAuth  = require('../utils/auth');
+const withAuth  = require('../utils/auth');       // import the middleware authentication function
 
 const { Post, User, Comment } = require('../models');
 
 /////////////////////////////////////////////////////////////////////
 // Route for the main page
 
-router.get('/', withAuth, (req, res) => {
+router.get('/', withAuth, (req, res) => {  // "withAuth" returns here only if the user is logged-in
     Post.findAll({
       where: {
-        // use the ID from the session
+        // use the ID from the session (by a logged in user)
         user_id: req.session.user_id
       },
       attributes: [
@@ -38,7 +38,7 @@ router.get('/', withAuth, (req, res) => {
       .then(dbPostData => {
         // serialize data before passing to template
         const posts = dbPostData.map(post => post.get({ plain: true }));
-        res.render('dashboard', { posts, loggedIn: true });
+        res.render('dashboard', { posts, loggedIn: true });  // set "true" here, since a non-logged-in user can't get here
       })
       .catch(err => {
         console.log(err);
@@ -47,7 +47,7 @@ router.get('/', withAuth, (req, res) => {
   });
   
 /////////////////////////////////////////////////////////////////////
-// Route for the main page
+// Route for the finding a post by "ID"
 
 router.get('/edit/:id', withAuth, (req, res) => {
   Post.findOne({

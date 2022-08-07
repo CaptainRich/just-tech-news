@@ -68,8 +68,8 @@ async function loginFormHandler(event) {
 
 }
   
-
-  // These 'listeners' are for the submit buttons on the forms.
-  document.querySelector('.signup-form').addEventListener('submit', signupFormHandler);
-  document.querySelector('.login-form').addEventListener('submit', loginFormHandler);
+/////////////////////////////////////////////////////////////////////////////////////////////////////////
+// These 'listeners' are for the submit buttons on the forms.
+document.querySelector('.signup-form').addEventListener('submit', signupFormHandler);
+document.querySelector('.login-form').addEventListener('submit', loginFormHandler);
   
