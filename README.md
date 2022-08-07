@@ -35,7 +35,7 @@ Create a full-stack application to implement a bulletin board, based on the MVC 
  /controllers/api/comment-routes.js - the API routes for the 'comment' model 
  /controllers/home-routes.js        - the routes for the 'home page'
  /controllers/dashboard-routes.js   - the routes for "logged in" user
- /views                             - the parent directory for \layouts and \partials    
+ /views                             - the parent directory for \layouts and \partials  (handlebars)  
  /views/layouts                     - contains the "main" handlebars file
  /views/partials                    - contains files for the remainder of the handlebars to avoid HTML duplication
  /public/javascript                 - this directory contains the static pages for the front-end\
