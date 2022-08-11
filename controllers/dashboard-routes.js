@@ -2,7 +2,9 @@ const router    = require('express').Router();
 const sequelize = require('../config/connection');
 const withAuth  = require('../utils/auth');       // import the middleware authentication function
 
-const { Post, User, Comment } = require('../models');
+
+// Server Error: added "Vote" to the following line, probably not necessary
+const { Post, User, Comment, Vote } = require('../models');
 
 /////////////////////////////////////////////////////////////////////
 // Route for the main page
@@ -77,13 +79,17 @@ router.get('/edit/:id', withAuth, (req, res) => {
     ]
   }) 
       .then(dbPostData => {
-        // serialize data before passing to template
-        const post = dbPostData.get({ plain: true });
+        if (dbPostData) {
+          // serialize data before passing to template
+          const post = dbPostData.get({ plain: true });
 
-        res.render('edit-post', {
-         post,
-         loggedIn: true
-        });
+          res.render('edit-post', {
+            post,
+            loggedIn: true
+          });
+        } else {
+          res.status(404).end();         // Server Error: added this "else" clause
+        }
       })
       .catch(err => {
         console.log(err);
