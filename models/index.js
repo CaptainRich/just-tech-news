@@ -14,26 +14,31 @@ User.hasMany(Post, {
 
 Post.belongsTo(User, {
   foreignKey: 'user_id',           // a post can only belong to one user
+  onDelete: 'SET NULL'             // ServerError, added this line
 });
 
 User.belongsToMany(Post, {
   through: Vote,
   as: 'voted_posts',
-  foreignKey: 'user_id'
+  foreignKey: 'user_id',
+  onDelete: 'SET NULL'            // ServerError, added this line
 });
 
 Post.belongsToMany(User, {
   through: Vote,
   as: 'voted_posts',
-  foreignKey: 'post_id'
+  foreignKey: 'post_id',
+  onDelete: 'SET NULL'            // ServerError, added this line
 });
 
 Vote.belongsTo(User, {
-  foreignKey: 'user_id'
+  foreignKey: 'user_id',
+  onDelete: 'SET NULL'            // ServerError, added this line
 });
 
 Vote.belongsTo(Post, {
-  foreignKey: 'post_id'
+  foreignKey: 'post_id',
+  onDelete: 'SET NULL'            // ServerError, added this line
 });
 
 User.hasMany(Vote, {
@@ -45,15 +50,18 @@ Post.hasMany(Vote, {
 });
 
 Comment.belongsTo(User, {
-  foreignKey: 'user_id'
+  foreignKey: 'user_id',
+  onDelete: 'SET NULL'            // ServerError, added this line
 });
 
 Comment.belongsTo(Post, {
-  foreignKey: 'post_id'
+  foreignKey: 'post_id',
+  onDelete: 'SET NULL'            // ServerError, added this line
 });
 
 User.hasMany(Comment, {
-  foreignKey: 'user_id'
+  foreignKey: 'user_id',
+  onDelete: 'SET NULL'            // ServerError, added this line
 });
 
 Post.hasMany(Comment, {
